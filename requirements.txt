@@ -1,0 +1,6 @@
+Flask
+Flask-Login
+gunicorn
+openpyxl
+reportlab
+psycopg[binary]
