@@ -1063,11 +1063,12 @@ def login():
     </body>
     </html>
     """, error=error)
-    @app.route("/logout")
+@app.route("/logout")
 @login_required
 def logout():
     logout_user()
     return redirect(url_for("login"))
+
 @login_required
 @app.get("/")
 def index():
@@ -1212,4 +1213,5 @@ def health():
 if __name__ == "__main__":
     init_db()
     app.run(debug=True, host="127.0.0.1", port=5000)
+
 
