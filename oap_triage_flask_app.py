@@ -5,13 +5,35 @@ import sqlite3
 from datetime import datetime
 from typing import Any, Dict, List, Optional
 
-from flask import Flask, jsonify, render_template_string, request, send_file, url_for
+from flask import Flask, jsonify, render_template_string, request, send_file, url_for, redirect
+from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
+from werkzeug.security import generate_password_hash, check_password_hash
+import os
 from openpyxl import Workbook
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.units import mm
 from reportlab.pdfgen import canvas
 
-app = Flask(__name__)
+app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY", "change-me")
+
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = "login"
+ADMIN_USERNAME = os.environ.get("ADMIN_USERNAME", "drhnid")
+ADMIN_PASSWORD_HASH = os.environ.get(
+    "ADMIN_PASSWORD_HASH",
+    generate_password_hash("ChangeMe123!")
+)
+
+class User(UserMixin):
+    def __init__(self, username):
+        self.id = username
+
+@login_manager.user_loader
+def load_user(user_id):
+    if user_id == ADMIN_USERNAME:
+        return User(ADMIN_USERNAME)
+    return None
 DATABASE = "oap_triage.db"
 DEFAULT_SERVICE = "Service des urgences - Salle de déchocage - Hôpital Provincial CHPI"
 AUTHOR_NAME = "Dr. Karim Hnid, MD"
@@ -994,7 +1016,59 @@ DETAIL_HTML = """
 </html>
 """
 
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    error = ""
+    if request.method == "POST":
+        username = request.form.get("username", "").strip()
+        password = request.form.get("password", "")
 
+        if username == ADMIN_USERNAME and check_password_hash(ADMIN_PASSWORD_HASH, password):
+            login_user(User(ADMIN_USERNAME))
+            return redirect(url_for("index"))
+        else:
+            error = "Identifiants invalides"
+
+    return render_template_string("""
+    <!doctype html>
+    <html lang="fr">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>Connexion</title>
+      <style>
+        body { font-family: Arial, sans-serif; background: #f4f6fb; margin: 0; padding: 40px; }
+        .box { max-width: 420px; margin: auto; background: white; padding: 24px; border-radius: 16px; box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+        h1 { margin-top: 0; }
+        label { display: block; margin-top: 12px; font-weight: 700; }
+        input { width: 100%; padding: 10px; margin-top: 6px; border: 1px solid #d1d5db; border-radius: 10px; box-sizing: border-box; }
+        button { margin-top: 18px; width: 100%; padding: 12px; border: none; border-radius: 10px; background: #111827; color: white; font-weight: 700; cursor: pointer; }
+        .error { color: #b91c1c; margin-top: 12px; font-weight: 700; }
+      </style>
+    </head>
+    <body>
+      <div class="box">
+        <h1>Connexion</h1>
+        <form method="post">
+          <label>Nom d'utilisateur</label>
+          <input type="text" name="username" required>
+          <label>Mot de passe</label>
+          <input type="password" name="password" required>
+          <button type="submit">Se connecter</button>
+        </form>
+        {% if error %}
+          <div class="error">{{ error }}</div>
+        {% endif %}
+      </div>
+    </body>
+    </html>
+    """, error=error)
+    @app.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for("login"))
+@login_required
 @app.get("/")
 def index():
     form = {
@@ -1138,3 +1212,4 @@ def health():
 if __name__ == "__main__":
     init_db()
     app.run(debug=True, host="127.0.0.1", port=5000)
+
