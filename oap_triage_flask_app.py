@@ -1069,8 +1069,8 @@ def logout():
     logout_user()
     return redirect(url_for("login"))
 
-@login_required
 @app.get("/")
+@login_required
 def index():
     form = {
         "visit_date": now_local_str(),
@@ -1213,6 +1213,7 @@ def health():
 if __name__ == "__main__":
     init_db()
     app.run(debug=True, host="127.0.0.1", port=5000)
+
 
 
 
