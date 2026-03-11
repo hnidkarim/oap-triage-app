@@ -1208,11 +1208,12 @@ def api_patients():
 @app.get("/api/health")
 def health():
     return jsonify({"status": "ok", "database": DATABASE, "service_default": DEFAULT_SERVICE})
-
+init_db()
 
 if __name__ == "__main__":
     init_db()
     app.run(debug=True, host="127.0.0.1", port=5000)
+
 
 
 
