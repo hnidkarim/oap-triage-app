@@ -13,7 +13,7 @@ from openpyxl import Workbook
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.units import mm
 from reportlab.pdfgen import canvas
-
+app = Flask(__name__)
 app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY", "change-me")
 
 login_manager = LoginManager()
@@ -1213,5 +1213,6 @@ def health():
 if __name__ == "__main__":
     init_db()
     app.run(debug=True, host="127.0.0.1", port=5000)
+
 
 
