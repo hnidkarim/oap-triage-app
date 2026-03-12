@@ -1035,30 +1035,223 @@ def login():
     <head>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
-      <title>Connexion</title>
+      <title>Connexion | OAP Triage App</title>
       <style>
-        body { font-family: Arial, sans-serif; background: #f4f6fb; margin: 0; padding: 40px; }
-        .box { max-width: 420px; margin: auto; background: white; padding: 24px; border-radius: 16px; box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
-        h1 { margin-top: 0; }
-        label { display: block; margin-top: 12px; font-weight: 700; }
-        input { width: 100%; padding: 10px; margin-top: 6px; border: 1px solid #d1d5db; border-radius: 10px; box-sizing: border-box; }
-        button { margin-top: 18px; width: 100%; padding: 12px; border: none; border-radius: 10px; background: #111827; color: white; font-weight: 700; cursor: pointer; }
-        .error { color: #b91c1c; margin-top: 12px; font-weight: 700; }
+        body {
+          font-family: Arial, sans-serif;
+          background: #eef2f7;
+          margin: 0;
+          padding: 28px;
+          color: #0f172a;
+        }
+        .wrapper {
+          max-width: 1250px;
+          margin: auto;
+          display: grid;
+          grid-template-columns: 420px 1fr;
+          gap: 24px;
+          align-items: start;
+        }
+        .login-box, .info-box {
+          background: white;
+          border-radius: 18px;
+          box-shadow: 0 10px 28px rgba(0,0,0,0.08);
+          padding: 26px;
+        }
+        h1 {
+          margin-top: 0;
+          margin-bottom: 20px;
+          font-size: 30px;
+          color: #0f172a;
+        }
+        h2 {
+          margin-top: 0;
+          font-size: 24px;
+          color: #0f172a;
+        }
+        h3 {
+          margin-bottom: 8px;
+          font-size: 18px;
+          color: #0f172a;
+        }
+        p {
+          line-height: 1.5;
+          margin: 8px 0;
+        }
+        .small {
+          font-size: 14px;
+          color: #334155;
+        }
+        label {
+          display: block;
+          margin-top: 14px;
+          font-weight: 700;
+          font-size: 15px;
+        }
+        input {
+          width: 100%;
+          padding: 12px;
+          margin-top: 6px;
+          border: 1px solid #cbd5e1;
+          border-radius: 12px;
+          box-sizing: border-box;
+          font-size: 15px;
+          background: #fff;
+        }
+        button {
+          margin-top: 20px;
+          width: 100%;
+          padding: 14px;
+          border: none;
+          border-radius: 12px;
+          background: #0f172a;
+          color: white;
+          font-weight: 700;
+          font-size: 17px;
+          cursor: pointer;
+        }
+        .error {
+          color: #b91c1c;
+          margin-top: 14px;
+          font-weight: 700;
+        }
+        .card {
+          background: #f8fafc;
+          border: 1px solid #dbeafe;
+          border-radius: 14px;
+          padding: 18px;
+          margin-top: 16px;
+        }
+        .creator {
+          background: #eef2ff;
+          border: 1px solid #c7d2fe;
+        }
+        .science {
+          background: #f8fafc;
+          border: 1px solid #cbd5e1;
+        }
+        .tag {
+          display: inline-block;
+          background: #e2e8f0;
+          color: #0f172a;
+          padding: 6px 10px;
+          border-radius: 999px;
+          font-size: 12px;
+          font-weight: 700;
+          margin-right: 8px;
+          margin-top: 8px;
+        }
+        a {
+          color: #2563eb;
+          text-decoration: none;
+          font-weight: 700;
+          word-break: break-word;
+        }
+        .divider {
+          height: 1px;
+          background: #e2e8f0;
+          margin: 18px 0;
+        }
+        @media (max-width: 980px) {
+          .wrapper {
+            grid-template-columns: 1fr;
+          }
+        }
       </style>
     </head>
     <body>
-      <div class="box">
-        <h1>Connexion</h1>
-        <form method="post">
-          <label>Nom d'utilisateur</label>
-          <input type="text" name="username" required>
-          <label>Mot de passe</label>
-          <input type="password" name="password" required>
-          <button type="submit">Se connecter</button>
-        </form>
-        {% if error %}
-          <div class="error">{{ error }}</div>
-        {% endif %}
+      <div class="wrapper">
+        <div class="login-box">
+          <h1>Connexion</h1>
+          <p class="small">
+            Accès sécurisé à l’application prédictive OAP.
+          </p>
+
+          <form method="post">
+            <label>Nom d'utilisateur</label>
+            <input type="text" name="username" required>
+
+            <label>Mot de passe</label>
+            <input type="password" name="password" required>
+
+            <button type="submit">Se connecter</button>
+          </form>
+
+          {% if error %}
+            <div class="error">{{ error }}</div>
+          {% endif %}
+        </div>
+
+        <div class="info-box">
+          <h2>OAP Triage App</h2>
+          <p class="small">
+            Interface d’accès | Access portal
+          </p>
+
+          <div class="card creator">
+            <h3>Concepteur / Developer</h3>
+            <p><strong>Dr. Karim Hnid, MD</strong></p>
+            <p>Emergency Physician | Medical Author and Researcher | Morocco</p>
+            <p><strong>Fabricant de l’application / Application developer:</strong> Dr. Karim Hnid</p>
+            <p><strong>Email:</strong> hniddata@gmail.com</p>
+            <p><strong>ORCID:</strong> 0000-0003-0122-2783</p>
+            <p><strong>Web of Science ResearcherID:</strong> R-3425-2018</p>
+            <p><strong>YouTube:</strong> <a href="https://www.youtube.com/@hnid68" target="_blank">https://www.youtube.com/@hnid68</a></p>
+            <p><strong>Date de mise en ligne / Initial online deployment:</strong> 11 March 2026</p>
+          </div>
+
+          <div class="card">
+            <h3>Projet PROSPERO / PROSPERO Project</h3>
+            <p><strong>Ongoing PROSPERO Project:</strong> Poor pharmaceutical quality, medicinal impurities, and cancer risk (CRD420261335075)</p>
+            <p><strong>PROSPERO record:</strong> <a href="https://www.crd.york.ac.uk/PROSPERO/view/CRD420261335075" target="_blank">https://www.crd.york.ac.uk/PROSPERO/view/CRD420261335075</a></p>
+            <p><strong>Full protocol:</strong> <a href="https://www.crd.york.ac.uk/PROSPEROFILES/e58ed2a98e3ba4232a889eeee508a377.pdf" target="_blank">https://www.crd.york.ac.uk/PROSPEROFILES/e58ed2a98e3ba4232a889eeee508a377.pdf</a></p>
+          </div>
+
+          <div class="card science">
+            <h3>Base scientifique de l’application – Français</h3>
+            <p>
+              Cette application a été conçue comme un outil structuré d’aide au triage initial des patients présentant une suspicion d’œdème aigu pulmonaire (OAP) cardiogénique.
+            </p>
+            <p>
+              Son architecture clinique repose sur une approche pragmatique intégrant les signes de gravité immédiate, le contexte hémodynamique, la réévaluation précoce après traitement initial, et la décision d’orientation vers un niveau de soins supérieur lorsque cela est nécessaire.
+            </p>
+            <p>
+              Elle a été développée en parallèle avec les grands principes des recommandations internationales utilisées en insuffisance cardiaque aiguë et en évaluation cardiovasculaire d’urgence, notamment les cadres AHA/ACC/HFSA, sans prétendre se substituer à une validation clinique prospective indépendante.
+            </p>
+            <p>
+              Il s’agit d’un prototype décisionnel local destiné à standardiser la collecte des premières données cliniques, améliorer la traçabilité, renforcer la cohérence de l’évaluation initiale, et soutenir le jugement médical.
+            </p>
+            <p>
+              Cette application ne remplace ni le jugement clinique, ni les protocoles institutionnels, ni les recommandations officielles.
+            </p>
+          </div>
+
+          <div class="card science">
+            <h3>Scientific basis of the application – English</h3>
+            <p>
+              This application was designed as a structured support tool for the initial triage of patients with suspected cardiogenic acute pulmonary edema.
+            </p>
+            <p>
+              Its clinical architecture follows a pragmatic framework integrating immediate severity markers, hemodynamic context, early reassessment after initial treatment, and referral to a higher level of care whenever required.
+            </p>
+            <p>
+              It was developed in conceptual parallel with internationally used principles in acute heart failure and emergency cardiovascular assessment, particularly AHA/ACC/HFSA-oriented frameworks, without claiming to replace independent prospective clinical validation.
+            </p>
+            <p>
+              It should be understood as a local decision-support prototype intended to standardize early data capture, improve traceability, strengthen consistency of first-line assessment, and support clinical judgment.
+            </p>
+            <p>
+              This application does not replace clinical judgment, institutional protocols, or formal guideline-directed care.
+            </p>
+          </div>
+
+          <div class="divider"></div>
+
+          <span class="tag">Secure login</span>
+          <span class="tag">French / English</span>
+          <span class="tag">Prototype decision support</span>
+          <span class="tag">AHA/ACC/HFSA-aligned principles</span>
+        </div>
       </div>
     </body>
     </html>
@@ -1213,6 +1406,7 @@ init_db()
 if __name__ == "__main__":
     init_db()
     app.run(debug=True, host="127.0.0.1", port=5000)
+
 
 
 
